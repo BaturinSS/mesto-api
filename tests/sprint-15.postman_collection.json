@@ -1,0 +1,2454 @@
+{
+	"info": {
+		"_postman_id": "e0a38976-c144-4bf3-84c8-2bcb087663d7",
+		"name": "sprint-15",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "0"
+	},
+	"item": [
+		{
+			"name": "Защита авторизацией",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Код ответа равен 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\");\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с полем name меньше 2 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{$randomAlphaNumeric}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с полем name больше 30 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{$randomLoremSentences}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с полем about меньше 2 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{$randomAlphaNumeric}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с полем about больше 30 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{$randomLoremSentences}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с некорректным url-адресом в поле avatar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar_incorrect}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с некорректным email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email_incorrect}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя без обязательного поля email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\",\r\n    \"password\": \"{{user_password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя без обязательного поля password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя без необязательных полей",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200 или 201\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Полям name, about и аватар присвоены стандартные значения\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"user_email_second\"));\r",
+							"    pm.expect(user.name).to.eql(pm.collectionVariables.get(\"user_name_default\"));\r",
+							"    pm.expect(user.about).to.eql(pm.collectionVariables.get(\"user_about_default\"));\r",
+							"    pm.expect(user.avatar).to.eql(pm.collectionVariables.get(\"user_avatar_default\"));\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email_second}}\",\r\n    \"password\": \"{{user_password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200 или 201\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе совпадают с переданными\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(user.name).to.eql(pm.collectionVariables.get(\"user_name\"));\r",
+							"    pm.expect(user.about).to.eql(pm.collectionVariables.get(\"user_about\"));\r",
+							"    pm.expect(user.avatar).to.eql(pm.collectionVariables.get(\"user_avatar\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе содержится id созданного пользователя\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(user).to.have.property('_id');\r",
+							"    \r",
+							"    pm.collectionVariables.set(\"user_id\", user._id);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление пользователя с существующим email в БД",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 409\", () => {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"name\": \"{{user_name}}\",\r\n    \"about\": \"{{user_about}}\",\r\n    \"avatar\": \"{{user_avatar}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация с несуществующими email и password в БД",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400 или 401\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 401]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@test.ru\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация с некорректным полем email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400 или 401\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 401]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email_incorrect}}\",\r\n    \"password\": \"{{user_password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация без обязательного поля email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400 или 401\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 401]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"{{user_password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация без обязательного поля password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400 или 401\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 401]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"pm.collectionVariables.set(\"token\", response.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{user_email}}\",\r\n    \"password\": \"{{user_password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обработка неправильного пути",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/404",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"404"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение информации о пользователе",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата корректных данных\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(user.name).to.eql(pm.collectionVariables.get(\"user_name\"));\r",
+							"    pm.expect(user.about).to.eql(pm.collectionVariables.get(\"user_about\"));\r",
+							"    pm.expect(user.avatar).to.eql(pm.collectionVariables.get(\"user_avatar\"));\r",
+							"    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"user_email\"));\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение списка пользователей",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка списка пользователей\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response).to.be.an(\"array\");\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение пользователя по id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе совпадают с данными добавленного пользователя\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(user.name).to.eql(pm.collectionVariables.get(\"user_name\"));\r",
+							"    pm.expect(user.about).to.eql(pm.collectionVariables.get(\"user_about\"));\r",
+							"    pm.expect(user.avatar).to.eql(pm.collectionVariables.get(\"user_avatar\"));\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/:userid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						":userid"
+					],
+					"variable": [
+						{
+							"key": "userid",
+							"value": "{{user_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение пользователя с некорректным id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/:userid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						":userid"
+					],
+					"variable": [
+						{
+							"key": "userid",
+							"value": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение пользователя с несуществующим в БД id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user_id_const}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление данных пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Данные в ответе совпадают с данными обновленного пользователя\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(user.name).to.eql(pm.collectionVariables.get(\"user_name_changed\"));\r",
+							"    pm.expect(user.about).to.eql(pm.collectionVariables.get(\"user_about_changed\"));\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"name\": \"{{user_name_changed}}\",\r\n    \"about\": \"{{user_about_changed}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление данных пользователя с полем name меньше 2 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"name\": \"{{$randomAlphaNumeric}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление данных пользователя с полем name больше 30 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"name\": \"{{$randomLoremSentences}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление данных пользователя с полем about меньше 2 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"about\": \"{{$randomAlphaNumeric}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление данных пользователя с полем about больше 30 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"about\": \"{{$randomLoremSentences}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление аватара пользователя",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Url-адрес аватара в ответе совпадает с url-адресом аватара в запросе\", () => {\r",
+							"    const user = utils.getData(pm.response.json());\r",
+							"    pm.expect(user.avatar).to.eql(pm.collectionVariables.get(\"user_avatar_changed\"));\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"avatar\": \"{{user_avatar_changed}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me/avatar",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление аватара пользователя с некорректным url-адресом",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"avatar\": \"{{user_avatar_incorrect}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/me/avatar",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200 или 201\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"В ответе содержится id созданной карточки\", () => {\r",
+							"    const card = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(card).to.have.property('_id');\r",
+							"\r",
+							"    pm.collectionVariables.set(\"card_id\", card._id);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{card_name}}\",\r\n    \"link\": \"{{card_link}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки с полем name меньше 2 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomAlphaNumeric}}\",\r\n    \"link\": \"{{card_link}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки с полем name больше 30 символов",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomLoremSentences}}\",\r\n    \"link\": \"{{card_link}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки с некорректным url-адресом в поле link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{card_name}}\",\r\n    \"link\": \"{{card_link_incorrect}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки без обязательного поля name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"link\": \"{{card_link}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление карточки без обязательного поля link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{card_name}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение списка карточек",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка списка карточек\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response).to.be.an(\"array\");\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление лайка карточке",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200 или 201\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{card_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление лайка с некорректным id карточки",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление лайка с несуществующим в БД id карточки",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{user_id_const}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление лайка у карточки с некорректным id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление лайка у карточки с несуществующим в БД id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"\r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{user_id_const}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление лайка у карточки",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid",
+						"likes"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{card_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Проверка отсутствия лайка у карточки после его удаления",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Удаленный лайк не должен присутствовать в карточке\", () => {\r",
+							"    const cards = utils.getData(pm.response.json());\r",
+							"    const userId = pm.collectionVariables.get(\"user_id\");\r",
+							"    const cardId = pm.collectionVariables.get(\"card_id\");\r",
+							"    const card = cards?.find((item) => item._id === cardId);\r",
+							"\r",
+							"    pm.expect(!!card?.likes?.includes(userId)).to.eq(false);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление карточки",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{card_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Проверка отсутствия удаленной карточки в БД",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Удаленной карточки не должно быть в БД\", () => {\r",
+							"    const cards = utils.getData(pm.response.json());\r",
+							"    const deletedId = pm.collectionVariables.get(\"card_id\");\r",
+							"    const hasCard = !!cards?.find((item) => item._id === deletedId);\r",
+							"\r",
+							"    pm.expect(hasCard).to.eq(false);\r",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление карточки с некорректным id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление карточки с несуществующим в БД id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Код ответа равен 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка возврата поля message\", () => {\r",
+							"    pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_message_only\")))\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит message длинной больше 1 символа\", () => {\r",
+							"    const response = utils.getData(pm.response.json());\r",
+							"    \r",
+							"    pm.expect(response.message).to.be.a(\"string\")\r",
+							"    pm.expect(response.message.length).to.greaterThan(1);\r",
+							"});\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cards/:cardid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cards",
+						":cardid"
+					],
+					"variable": [
+						{
+							"key": "cardid",
+							"value": "{{user_id_const}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const schemaMessageOnly = {",
+					"    \"properties\": {",
+					"        \"message\": {",
+					"            \"type\": \"string\"",
+					"        }",
+					"    }",
+					"};",
+					"",
+					"pm.collectionVariables.set(\"schema_message_only\", JSON.stringify(schemaMessageOnly));",
+					"",
+					"utils = {",
+					"    getData: (jsonData) => {",
+					"        if(Array.isArray(jsonData)) {",
+					"            return jsonData;",
+					"        }",
+					"",
+					"        const keys = Object.keys(jsonData);",
+					"        const firstKey = keys[0];",
+					"        const firstKeyValue = jsonData[firstKey];",
+					"",
+					"        return keys.length === 1 && typeof firstKeyValue === 'object' ? firstKeyValue : jsonData;",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"В ответе приходит JSON-объект\", () => {",
+					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "user_name",
+			"value": "test",
+			"type": "string"
+		},
+		{
+			"key": "user_about",
+			"value": "ab",
+			"type": "string"
+		},
+		{
+			"key": "user_avatar",
+			"value": "https://ya.ru/av.bmp",
+			"type": "string"
+		},
+		{
+			"key": "user_email",
+			"value": "em@em.ru",
+			"type": "string"
+		},
+		{
+			"key": "user_email_second",
+			"value": "em2@em2.ru",
+			"type": "string"
+		},
+		{
+			"key": "user_password",
+			"value": "longPass",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id_const",
+			"value": "61eade4c6d5acf558c42d9b8",
+			"type": "string"
+		},
+		{
+			"key": "user_name_default",
+			"value": "Жак-Ив Кусто",
+			"type": "string"
+		},
+		{
+			"key": "user_about_default",
+			"value": "Исследователь",
+			"type": "string"
+		},
+		{
+			"key": "user_avatar_default",
+			"value": "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
+			"type": "string"
+		},
+		{
+			"key": "user_name_changed",
+			"value": "Обновленное имя",
+			"type": "string"
+		},
+		{
+			"key": "user_about_changed",
+			"value": "Обновленная информация о себе",
+			"type": "string"
+		},
+		{
+			"key": "user_avatar_changed",
+			"value": "https://ya.ru/av2.bmp",
+			"type": "string"
+		},
+		{
+			"key": "user_email_incorrect",
+			"value": "test",
+			"type": "string"
+		},
+		{
+			"key": "user_name_incorrect",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "user_about_incorrect",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "user_avatar_incorrect",
+			"value": "https://ya@.ru/av.bmp",
+			"type": "string"
+		},
+		{
+			"key": "card_name",
+			"value": "testCard",
+			"type": "string"
+		},
+		{
+			"key": "card_link",
+			"value": "https://ya.ru/link.test",
+			"type": "string"
+		},
+		{
+			"key": "card_link_incorrect",
+			"value": "https://ya@.ru/av.bmp",
+			"type": "string"
+		},
+		{
+			"key": "card_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "schema_message_only",
+			"value": ""
+		}
+	]
+}

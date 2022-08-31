@@ -1,0 +1,47 @@
+{
+  "name": "express-mesto-gha",
+  "version": "1.0.0",
+  "description": "Проект Mesto фронтенд + бэкенд",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js",
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaturinSS/express-mesto-gha.git"
+  },
+  "keywords": [],
+  "author": "Sergey Baturin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BaturinSS/express-mesto-gha/issues"
+  },
+  "homepage": "https://api.server-mesto.ru",
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.2",
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.2",
+    "validator": "^13.7.0",
+    "winston": "^3.8.1"
+  }
+}
